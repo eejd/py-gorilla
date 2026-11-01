@@ -1,18 +1,15 @@
 from tree_sitter import Language, Parser
 import tree_sitter_javascript
 
-JS_LANGUAGE = Language(tree_sitter_javascript.language(), "javascript")
-
-parser = Parser()
-parser.set_language(JS_LANGUAGE)
+JS_LANGUAGE = Language(tree_sitter_javascript.language())
+parser = Parser(JS_LANGUAGE)
 
 
 def parse_javascript_function_call(source_code):
     # Parse the source code
     tree = parser.parse(bytes(source_code, "utf8"))
     root_node = tree.root_node
-    sexp_result = root_node.sexp()
-    if "ERROR" in sexp_result:
+    if root_node.has_error:
         raise SyntaxError("Error js parsing the source code.")
 
     # Function to recursively extract argument details

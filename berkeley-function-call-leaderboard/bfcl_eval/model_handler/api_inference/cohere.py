@@ -97,11 +97,11 @@ class CohereHandler(BaseHandler):
             for msg in response_message.content:
                 if hasattr(msg, "thinking"):
                     chat_turn_to_append.content.append(
-                        cohere.ThinkingAssistantMessageV2ContentItem(thinking=msg.thinking)
+                        cohere.types.ThinkingAssistantMessageV2ContentOneItem(thinking=msg.thinking)
                     )
                 else:
                     chat_turn_to_append.content.append(
-                        cohere.TextAssistantMessageV2ContentItem(text=msg.text)
+                        cohere.types.TextAssistantMessageV2ContentOneItem(text=msg.text)
                     )
         if response_message.citations:
             chat_turn_to_append.citations = response_message.citations
@@ -180,10 +180,10 @@ class CohereHandler(BaseHandler):
             if isinstance(api_response["model_responses"], list):
                 model_responses = []
                 for item in api_response["model_responses"]:
-                    if isinstance(item, cohere.types.ThinkingAssistantMessageV2ContentItem):
+                    if isinstance(item, cohere.types.ThinkingAssistantMessageV2ContentOneItem):
                         reasoning_content += item.thinking
                         continue
-                    elif isinstance(item, cohere.types.TextAssistantMessageV2ContentItem):
+                    elif isinstance(item, cohere.types.TextAssistantMessageV2ContentOneItem):
                         model_responses.append(item.text)
                     else:
                         model_responses.append(item)

@@ -15,7 +15,7 @@ from bfcl_eval.model_handler.utils import (
     retry_with_backoff,
     system_prompt_pre_processing_chat_model,
 )
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 
 class MistralHandler(BaseHandler):
